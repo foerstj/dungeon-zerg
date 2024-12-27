@@ -29,14 +29,6 @@ property float  	accel_rate$      	 		= 0.2			doc = "Rate of accel/decel. (Modif
 property int		accel_count$         		= 10			doc = "Number of spawn cycles at peak accel before decel.";
 property float  	accel_cap$           		= 0.2			doc = "When the Spawn_Period is less than this number accel stops.";
 property float  	decel_cap$  				= 2.0      		doc = "When the Spawn_Period is greater than this number decel stops.";
-//----Sound-----------
-property bool   	sound_start$            	= true			doc = "Play the opening sound?";
-property bool   	sound_end$              	= true			doc = "Play the closing sound?";
-//----Close Effects----
-property bool		close_sfx_on$				= true			doc = "Is the closing dust effect on?";
-property bool   	close_sfx_at_spawnpoint$    = true          doc = "Do you want to use the spawnpoint for the effect location?";
-property string		close_sfx$					= "grate_dust"	doc = "Must Specify SiegeFx Script if Close Sfx On";
-property string 	close_sfx_params$			= ""			doc = "Parameters for the SiegeFx script";  //Rick do I need this?  -J
 
 owner = GoSkritComponent;
 
@@ -109,12 +101,6 @@ bool spawn_guy$
 	
 		Report.ReportF("jedi","kids left: %d\n",num_children_incubating$);
 		
-		//Play Open Sound
-		if ( sound_start$ == true )
-    	{
-			owner.Go.SPlayMaterialSound( "gen_start", "generic", true);
-		}
-
         // make a new child
 		GoCloneReq cloneReq$ = MakeGoCloneReq( owner.Goid, child_template_name$ );
 
@@ -153,27 +139,6 @@ bool spawn_guy$
 
 void Close_gen$
 {
-    //Play Close Sound
-	if ( sound_end$ == true )
-    {
-		owner.Go.SPlayMaterialSound( "gen_end", "generic", true);
-	}
-
-	//Play a dust anim if valid
-	if ((close_sfx_at_spawnpoint$) && (close_sfx_on$))
-	{
-		Goid spawnGoid$ = SpawnPoint$.Goid;
-
-		if ( spawnGoid$.isvalid() )
-		{
-       		SiegeFx.SRunScript( close_sfx$, spawnGoid$, spawnGoid$, close_sfx_params$, spawnGoid$, WE_UNKNOWN );
-		}
-	}
-    else if (close_sfx_on$)
-	{
-   		SiegeFx.SRunScript( close_sfx$, owner.Goid, owner.Goid, close_sfx_params$, owner.Goid, WE_UNKNOWN );
-	}
-
 	Report.ReportF("jedi","[%8.3f] Transition [Closing$ -> CheckSpawn$] for %s\n",WorldTime.time,owner.goid.go.templatename);
 }
 
