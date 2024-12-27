@@ -6,7 +6,7 @@
     doc = "zergling";
 
     // prevent recursive zergling inception
-    [generator_advanced_a2]
+    [generator_dungeon_zerg]
     {
         child_template_name = ;
         trigger_range = -1;

@@ -266,7 +266,7 @@
 	}
 
     // ADDED
-    [generator_advanced_a2]
+    [generator_dungeon_zerg]
     {
         child_template_name = zergling;
         trigger_range = 32;
