@@ -265,6 +265,7 @@
 			?still									= false;
 	}
 
+    // ADDED
     [generator_advanced_a2]
     {
         child_template_name = zergling;

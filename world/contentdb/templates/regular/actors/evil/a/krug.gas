@@ -978,6 +978,15 @@
 			  frag_glb_krug_scavenger_08 = 1;
 		}
 	}
+
+    // ADDED - prevent disturbance of KoE NIS
+    [generator_advanced_a2]
+    {
+        child_template_name = ;
+        trigger_range = -1;
+        num_children_incubating = 0;
+        max_alive_children = 0;
+    }
 }
 [t:template,n:krug_scavenger_boss_01]
 {
