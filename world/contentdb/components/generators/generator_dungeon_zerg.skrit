@@ -1,15 +1,3 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-// File     :  generator_advanced_a2.skrit
-// Author(s):  Eric Tams, Uncle Ernsie
-//
-// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
-//----------------------------------------------------------------------------
-//  $Revision:: $              $Date:$
-//----------------------------------------------------------------------------
-//////////////////////////////////////////////////////////////////////////////
-
-//
 // ScidBits Key.
 // lower 16 bits, number remaining creatures to spawn
 // 17th bit = modified
@@ -20,12 +8,8 @@
 
 // reserved tags
 property bool   _server_only$        = true;
-property string _doc$                = "Advanced Gen which Supports Two Anims, Accel/Decel, and External Spawnpoints";
+property string _doc$                = "Dungeon Zerg generator";
 property string _required_component$ = "placement";
-
-//Internal Properties
-bool	anim_over$      = false;
-//bool	 accel_over$	= false;
 
 // exported properties
 //----Movement--------
@@ -38,10 +22,7 @@ property float  	spawn_period$            	= 2.0			doc = "Period between spawns.
 property int    	max_alive_children$      	= 1        		doc = "Maximum number of children which can be alive at a time.";
 property float  	spawn_range$             	= 0.5			doc = "A radius around the spawnpoint/or generator used for collision detection.";
 property float  	trigger_range$             	= -1.0			doc = "When a party member is within this radius, the generator will activate.";
-//----Anims-----------
-property bool		anim_one_shot$				= false			doc = "Only play the spawn animation once before we start to spawn actors.";
-property int 		anim_chore_start$    		= 'SPWN'		doc = "Play this anim chore before spawning the actor.";
-property int	 	anim_chore_end$      		= 'REST'	   	doc = "Play this anim chore after spawning the actor.";
+//----Accel-----------
 property bool   	accelerate$          		= true			doc = "Acceleration on?";
 property int    	accel_delay$         		= 1				doc = "Number of spawn cycles before accelerating.";
 property float  	accel_rate$      	 		= 0.2			doc = "Rate of accel/decel. (Modifies Spawn_Period).";
@@ -99,18 +80,6 @@ event OnGoDrawDebugHud$
 //////////////////////////////////////////////////////////////////////////////
 // functions
 
-bool TryAnim$( int FourCC$ )
-{
-	int Anim$ = owner.Go.Aspect.AspectHandle.Blender.GetSubAnimIndex(CHORE_MISC,FourCC$);
-		
-	if (Anim$ >= 0)
-	{
-		eReqRetCode ret$ = MCPManager.MakeRequest( owner.Goid, PL_PLAYANIM, CHORE_MISC, Anim$, 0 );
-		return true;	
-	}
-	return false;
-}
-
 bool spawn_guy$
 {
 	accel_cap$ = Math.MaxFloat(0.2, accel_cap$);
@@ -140,17 +109,6 @@ bool spawn_guy$
 	
 		Report.ReportF("jedi","kids left: %d\n",num_children_incubating$);
 		
-		//open the grate
-   		Report.ReportF("jedi","[%8.3f] Animate Open for %s\n",WorldTime.time,owner.goid.go.templatename);
-
-		if (!anim_over$)
-		{
-			TryAnim$('spwn');
-			if (anim_one_shot$)
-            {
-              	anim_over$ = true;
-         	}
-         }
 		//Play Open Sound
 		if ( sound_start$ == true )
     	{
@@ -195,12 +153,6 @@ bool spawn_guy$
 
 void Close_gen$
 {
-	if (!anim_over$)
-	{
-   		Report.ReportF("jedi","[%8.3f] Animate Closed for %s\n",WorldTime.time,owner.goid.go.templatename);
-		TryAnim$('rest');
-	}
-
     //Play Close Sound
 	if ( sound_end$ == true )
     {
@@ -284,11 +236,6 @@ startup state Startup$
 			if( num_left$ < num_children_incubating$ )
 			{
 				num_children_incubating$ = num_left$;
-				if( anim_one_shot$ )
-				{
-					TryAnim$('spwn');
-					anim_over$ = true;
-				}
 			} 
 			if ( Godb.GetScidBit( owner.scid, 17 ) ) //generator is active
 			{
@@ -364,7 +311,6 @@ state CheckSpawn$
 State Opening$
 {
 	transition -> Accel$: OnTimer( 1 );
-	transition -> Accel$: OnGoHandleMessage( WE_ANIM_DONE );
 
     event OnEnterState$
     {
@@ -407,9 +353,3 @@ State Exiting$
 		num_children_incubating$ = 0;
 	}
 }
-
-
-
-
-
-
