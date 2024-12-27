@@ -264,6 +264,20 @@
 		jat_fidget									= world\ai\jobs\common\job_fidget.skrit
 			?still									= false;
 	}
+
+    [generator_advanced_a2]
+    {
+        child_template_name = zergling;
+        trigger_range = 32;
+        num_children_incubating = 8;
+        max_alive_children = 8;
+        spawn_period = 0.1;
+        accelerate = false;
+        spawn_range = 8;
+        sound_start = false;
+        sound_end = false;
+        close_sfx_on = false;
+    }
 }
 
 [t:template,n:actor_custom]
