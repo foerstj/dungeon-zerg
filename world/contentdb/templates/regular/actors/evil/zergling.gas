@@ -118,6 +118,31 @@
         sight_range				= 14.0;
         actor_life_ratio_low_threshold 		= 0.5;
     }
+
+    // Eww! Brother eww!
+	[guts_manager]
+	{
+        effect_name = spider_guts_yellow;
+	}
+    [common]
+    {
+        [template_triggers]
+        {
+			[*]
+			{
+				action* = call_sfx_script("giant_spider_chunks");
+				action* = call_sfx_script("giant_spider_chunks");
+				action* = call_sfx_script("giant_spider_chunks");
+				action* = call_sfx_script("giant_spider_chunks");
+				action* = call_sfx_script("giant_spider_chunks");
+				action* = call_sfx_script("spider_guts_yellow");
+				action* = call_sfx_script("spider_guts_yellow");
+				action* = call_sfx_script("spider_guts_yellow");
+				condition* = receive_world_message("WE_KILLED");
+				single_shot = true;
+			}
+        }
+    }
 }
 
 [t:template,n:zergling]
