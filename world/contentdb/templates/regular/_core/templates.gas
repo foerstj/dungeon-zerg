@@ -273,11 +273,7 @@
         num_children_incubating = 8;
         max_alive_children = 8;
         spawn_period = 0.1;
-        accelerate = false;
         spawn_range = 8;
-        sound_start = false;
-        sound_end = false;
-        close_sfx_on = false;
     }
 }
 
