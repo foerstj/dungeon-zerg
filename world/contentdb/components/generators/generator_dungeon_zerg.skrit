@@ -12,7 +12,6 @@ property string _doc$                = "Dungeon Zerg generator";
 property string _required_component$ = "placement";
 
 // exported properties
-//----Generator-------
 property string 	child_template_name$						doc = "Template name of the child you want to spawn.";
 property int    	num_children_incubating$	= 1				doc = "How many children total do you want to spawn?";
 property float  	spawn_period$            	= 2.0			doc = "Period between spawns.";
@@ -56,7 +55,6 @@ bool spawn_guy$
 	}
 
 	Report.ReportF("jedi","[%8.3f] Blocking Check for %s\n",WorldTime.time,owner.goid.go.templatename);
-    //This is supposed to be a false check but is broken right now.  -J
 	if ( !blocked$ )
 	{
 		// one less monster
@@ -118,8 +116,6 @@ startup state Startup$
 		
 		int bits$ = Godb.GetScidBits( owner.scid );
 		
-//		report.genericf("In Bits: 0x%08x, %d\n", bits$, bits$);
-		
 		if( !( bits$ == 0 ) )
 		{
 			int num_left$ = bits$ & 0x0000FFFF;
@@ -128,7 +124,7 @@ startup state Startup$
 			{
 				num_children_incubating$ = num_left$;
 			} 
-			if ( Godb.GetScidBit( owner.scid, 17 ) ) //generator is active
+			if ( Godb.GetScidBit( owner.scid, 17 ) )  // generator is active
 			{
 				SetState CheckSpawn$;
 				return;
@@ -139,7 +135,7 @@ startup state Startup$
 	}
 	event OnExitState$
 	{
-		Godb.SetScidBit( owner.scid, 16, true);
+		Godb.SetScidBit( owner.scid, 16, true);  // generator is modified
 	}
 }
 
@@ -151,7 +147,7 @@ state Inactive$
 
 	event OnEnterState$
 	{
-		Godb.SetScidBit( owner.scid, 17, false );
+		Godb.SetScidBit( owner.scid, 17, false );  // generator is active
 
 		if( Trigger_Range$ > 0.0 )
 		{
@@ -184,7 +180,7 @@ state CheckSpawn$
 	
 	event OnEnterState$
 	{
-		Godb.SetScidBit( owner.scid, 17, true );
+		Godb.SetScidBit( owner.scid, 17, true );  // generator is active
 		
 		if ( num_children_incubating$ > 0 )
 		{
@@ -228,7 +224,7 @@ State Exiting$
 {
 	event OnEnterState$
 	{
-		Godb.SetScidBit( owner.scid, 17, false );
+		Godb.SetScidBit( owner.scid, 17, false );  // generator is active
 		num_children_incubating$ = 0;
 	}
 }
