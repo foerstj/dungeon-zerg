@@ -8,7 +8,7 @@ set ds=%DungeonSiege%
 :: path of TankCreator
 set tc=%TankCreator%
 
-set copyright=CC-BY-SA 2024
+set copyright=CC-BY-SA 2025
 set author=Johannes Förstner
 
 :: Compile main resource file
