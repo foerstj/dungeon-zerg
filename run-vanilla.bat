@@ -4,7 +4,7 @@ set bits=%~dp0.
 set ds=%DungeonSiege%
 
 :: Compile main resource file
-call "%bits%\build.bat" %*
+call "%bits%\build.bat" vanilla
 
 ::pause
 
@@ -12,4 +12,4 @@ call "%bits%\build.bat" %*
 "%ds%\DungeonSiege.exe" nointro=true map=multiplayer_world
 
 :: Cleanup resources so as not to confuse Siege Editor
-call "%bits%\cleanup.bat" %*
+call "%bits%\cleanup.bat"
