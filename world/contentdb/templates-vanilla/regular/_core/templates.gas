@@ -267,7 +267,7 @@
     // ADDED
     [generator_dungeon_zerg]
     {
-        child_template_name = zergling;
+        child_template_name = zergling_vanilla;
         trigger_range = 32;
         num_children_incubating = 8;
         max_alive_children = 8;

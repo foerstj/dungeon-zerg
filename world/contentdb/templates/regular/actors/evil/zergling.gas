@@ -17,7 +17,7 @@
     [aspect]
     {
         model = m_c_edm_chs_pos_1;
-        textures:0 = b_c_edm_chs-dz;
+        textures:0 = b_c_edm_chs;
         material = flesh;
 		scale_base = 0.35;
 		[voice]
@@ -96,7 +96,7 @@
     }
     [common]
     {
-        screen_name = "Zergling";
+        screen_name = "LoA Zergling";
         membership = monster;
     }
     [mind]
@@ -145,7 +145,8 @@
     }
 }
 
-[t:template,n:zergling]
+[t:template,n:zergling] { specializes = zergling_base;}
+[t:template,n:zergling_base]
 {
     specializes = base_zergling;
 
@@ -173,4 +174,12 @@
 		damage_min = 1;
 	}
 	[defend] { defense=1; }
+}
+
+[t:template,n:zergling_vanilla]
+{
+    specializes = zergling_base;
+
+    aspect:textures:0 = b_c_edm_chs-v;
+    common:screen_name = "Vanilla Zergling";
 }
