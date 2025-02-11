@@ -96,7 +96,7 @@
     }
     [common]
     {
-        screen_name = "LoA Zergling";
+        screen_name = "Zergling";
         membership = monster;
     }
     [mind]
@@ -181,5 +181,5 @@
     specializes = zergling_base;
 
     aspect:textures:0 = b_c_edm_chs-v;
-    common:screen_name = "Vanilla Zergling";
+    //common:screen_name = "Vanilla Zergling";
 }
