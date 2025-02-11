@@ -18,5 +18,13 @@ robocopy "%bits%\world\contentdb\templates" "%tmp%\Bits\world\contentdb\template
 "%tc%\RTC.exe" -source "%tmp%\Bits" -out "%ds%\DSLOA\%mod_cs%.dsres" -copyright "%copyright%" -title "%mod_cs%" -author "%author%"
 if %errorlevel% neq 0 pause
 
+:: Compile main resource file - vanilla
+rmdir /S /Q "%tmp%\Bits"
+robocopy "%bits%\art" "%tmp%\Bits\art" /S /xf *.psd
+robocopy "%bits%\world\contentdb\components" "%tmp%\Bits\world\contentdb\components" /E
+robocopy "%bits%\world\contentdb\templates" "%tmp%\Bits\world\contentdb\templates" /E
+"%tc%\RTC.exe" -source "%tmp%\Bits" -out "%ds%\Resources\%mod_cs%.dsres" -copyright "%copyright%" -title "%mod_cs%" -author "%author%"
+if %errorlevel% neq 0 pause
+
 :: Cleanup
 rmdir /S /Q "%tmp%\Bits"
