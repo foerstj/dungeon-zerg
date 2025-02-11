@@ -1,2 +1,6 @@
 dir.lqd20
+
 *.psd
+
+**/*.bat
+*.exe
